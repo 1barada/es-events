@@ -3,7 +3,6 @@ import { ApiResponse, EventActivity, Participant } from "../types";
 import { Event } from "../types";
 import { ErrorUI } from "./ErrorUI";
 import { API_URL } from "../constants";
-import { LineChart } from "@mui/x-charts";
 import { VictoryChart, VictoryLine } from "victory";
 
 interface EventInfoProps {
