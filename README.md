@@ -1,4 +1,4 @@
-# How to start
+# How to start (deploy - [https://es-events-client.vercel.app/](https://es-events-client.vercel.app/))
 
 ```npm run dev```
 
