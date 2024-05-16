@@ -9,12 +9,12 @@ client - [localhost:5173](http://localhost:5173)
 ## Environment variables
 apps/api/.env:
 ```
-DATABASE_URL="postgresql://postgres:11111111@localhost:5432/es-events?schema=public"
+DATABASE_URL="postgresql://<name>:<password>@<host>/<database>?schema=public"
 ```
 
 apps/client/.env:
 ```
 NODE_ENV=development
-PUBLIC_URL=
-PUBLIC_API_URL=
+VITE_NODE_ENV=
+VITE_PUBLIC_API_URL=
 ```
