@@ -5,13 +5,9 @@ import { useNavigate } from 'react-router-dom';
 
 interface EventBoardCellProps {
   event: Event;
-  registerHandler: (event: Event) => void;
 }
 
-export default function EventBoardCell({
-  event,
-  registerHandler
-}: EventBoardCellProps) {
+export default function EventBoardCell({ event }: EventBoardCellProps) {
   const navigate = useNavigate();
 
   return (
@@ -27,7 +23,7 @@ export default function EventBoardCell({
           <div className='overflow-hidden text-ellipsis'>{event.description}</div>
         </div>
         <div className='flex justify-between text-blue-400 gap-16'>
-          <EventBoardCellButton onClick={() => registerHandler(event)}>Register</EventBoardCellButton>
+          <EventBoardCellButton onClick={() => navigate('/event/register/' + event.id)}>Register</EventBoardCellButton>
           <EventBoardCellButton onClick={() => navigate('/event/' + event.id)}>View</EventBoardCellButton>
         </div>
       </div>

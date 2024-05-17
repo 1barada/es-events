@@ -4,12 +4,10 @@ import { Event } from "../types";
 import { ErrorUI } from "./ErrorUI";
 import { API_URL } from "../constants";
 import { VictoryChart, VictoryLine } from "victory";
-import { IoArrowBack } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import GoBackHomeButton from "./GoBackHomeButton";
 
 export default function EventInfo() {
   const eventId = window.location.pathname.split('/').at(-1);
-  const navigate = useNavigate();
   const [ search, setSearch ] = useState<string | undefined>(undefined);
   const [ event, setEvent ] = useState<Event | null>(null);
   const [ isLoading, setIsLoading ] = useState<boolean>(true);
@@ -47,13 +45,7 @@ export default function EventInfo() {
         ) : (
           <div className="flex flex-col gap-4">
             <div className="flex flex-row justify-between">
-              <button 
-                className="w-8 h-8 hover:bg-slate-100 p-1 rounded-full flex justify-center items-center"
-                title='go back home'
-                onClick={() => navigate('/')}
-              >
-                <IoArrowBack className="leading-3"/>
-              </button>
+              <GoBackHomeButton/>
               <h1 className="text-2xl font-semibold">{`"${event.title}" event participants`}</h1>
               <div className="">
                 <input 

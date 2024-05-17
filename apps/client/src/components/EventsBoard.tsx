@@ -4,11 +4,7 @@ import { API_URL, BOARD_ITEMS_ROW } from "../constants";
 import EventBoardCell from "./EventBoardCell";
 import { ErrorUI } from "./ErrorUI";
 
-interface EventBoardProps {
-  registerHandler: (event: Event) => void;
-}
-
-export default function EventsBoard({ registerHandler }: EventBoardProps) {
+export default function EventsBoard() {
   const [ events, setEvents ] = useState<Event[]>([]);
   const [ error, setError ] = useState<string | string[] | null>(null);
   const [ isLoading, setIsLoading ] = useState<boolean>(true);
@@ -130,7 +126,6 @@ export default function EventsBoard({ registerHandler }: EventBoardProps) {
             <EventBoardCell 
               key={event.id} 
               event={event} 
-              registerHandler={registerHandler}
             />
           )
         )}
