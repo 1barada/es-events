@@ -9,13 +9,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 function App() {
   const [ event, setEvent ] = useState<Event | undefined>(undefined);
   
-  const [ isEventInfoModalOpen, setIsEventInfoModalOpen ] = useState<boolean>(false);
   const [ isRegisterModalOpen, setIsRegisterModalOpen ] = useState<boolean>(false);
-
-  function openEventInfoModal(event: Event) {
-    setEvent(event);
-    setIsEventInfoModalOpen(true);
-  }
 
   function openRegisterModal(event: Event) {
     setEvent(event);
