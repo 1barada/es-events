@@ -6,13 +6,9 @@ import { ErrorUI } from "./ErrorUI";
 
 interface EventBoardProps {
   registerHandler: (event: Event) => void;
-  viewHandler: (event: Event) => void;
 }
 
-export default function EventsBoard({
-  registerHandler,
-  viewHandler
-}: EventBoardProps) {
+export default function EventsBoard({ registerHandler }: EventBoardProps) {
   const [ events, setEvents ] = useState<Event[]>([]);
   const [ error, setError ] = useState<string | string[] | null>(null);
   const [ isLoading, setIsLoading ] = useState<boolean>(true);
@@ -43,18 +39,19 @@ export default function EventsBoard({
 
     if (error) {
       setError(error.message);
-      return;
+    } else {
+      setSkip((value) => value + (BOARD_ITEMS_ROW * 2));
+      setEvents((prev) => [...prev, ...data.events.map((event) => ({ ...event, date: new Date(event.date) }))]);
+      setTotal(data.total);
     }
 
-    setSkip((value) => value + (BOARD_ITEMS_ROW * 2));
-    setEvents((prev) => [...prev, ...data.events]);
-    setTotal(data.total);
     setIsLoading(false);
   }, [skip, isLoading, sortBy, isSortDesc]);
 
   useEffect(() => {
     setSkip(0);
     async function fetchEvents() {
+      setIsLoading(true);
       const params = new URLSearchParams({ take: (BOARD_ITEMS_ROW * 5).toString() });
       if (sortBy !== null) params.append('sortBy', sortBy);
       if (isSortDesc) params.append('desc', 'true');
@@ -67,12 +64,12 @@ export default function EventsBoard({
 
       if (error) {
         setError(error.message);
-        return;
+      } else {
+        setEvents(data.events.map((event) => ({ ...event, date: new Date(event.date) })));
+        setSkip(BOARD_ITEMS_ROW * 5);
+        setTotal(data.total);
       }
 
-      setEvents(data.events);
-      setSkip(BOARD_ITEMS_ROW * 5);
-      setTotal(data.total);
       setIsLoading(false);
     }
 
@@ -96,7 +93,7 @@ export default function EventsBoard({
   }, [fetchMoreEvents]);
 
   return (
-    <div className="flex flex-col gap-4 border-gray-400 border-2 rounded p-4">
+    <div className="flex flex-col gap-4 p-4">
       <div className="flex flex-row justify-between">
         <h1 className="text-2xl">Events</h1>
         <div className="flex flex-row gap-2 items-center">
@@ -125,7 +122,7 @@ export default function EventsBoard({
           </select>
         </div>
       </div>
-      <div className="grid grid-cols-4 gap-8">
+      <div className="grid grid-cols-4 gap-5">
         {error ? (
           <ErrorUI error={error}/>
         ) : (
@@ -134,7 +131,6 @@ export default function EventsBoard({
               key={event.id} 
               event={event} 
               registerHandler={registerHandler}
-              viewHandler={viewHandler}
             />
           )
         )}

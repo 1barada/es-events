@@ -15,8 +15,8 @@ export default function RegisterForm({ event, close }: RegisterFormProps) {
   const [ invalidInputMessage, setInvalidInputMessage ] = useState<string | null>(null);
   const [ isLoading, setIsLoading ] = useState<boolean>(false);
 
-  const inputContainerStyle = 'flex flex-row gap-4';
   const inputStyle = 'rounded p-1 border-2';
+  const rangeContainerStyles = 'flex flex-row gap-1';
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -67,39 +67,46 @@ export default function RegisterForm({ event, close }: RegisterFormProps) {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <div className={inputContainerStyle}>
-          <label htmlFor="fullName">Full name</label>
-          <input className={inputStyle} type="text" id='fullName' onChange={(e) => setFullName(e.target.value)}/>
+    <div className="flex flex-col gap-8">
+      <h2 className="text-center text-lg">Register for "{event.title}" event</h2>
+      <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
+        <label htmlFor="fullName">Full name</label>
+        <input className={inputStyle} type="text" id='fullName' onChange={(e) => setFullName(e.target.value)}/>
+
+        <label htmlFor="email">Email</label>
+        <input className={inputStyle} type="text" id='email' onChange={(e) => setEmail(e.target.value)}/>
+
+        <label htmlFor="dateOfBirth">Date of birth</label>
+        <input className={inputStyle} type="date" id='dateOfBirth' onChange={(e) => setDateOfBirth(new Date(e.target.value))}/>
+
+        
+        <p>Where did you hear about this event?</p>
+        <div className='col-span-2 flex flex-row justify-between'>
+          <div className={rangeContainerStyles}>
+            <input type="radio" id="social media" name="heardFrom" value="social media" onChange={(e) => setHeardFrom(e.target.value)}/>
+            <label htmlFor="social media">Social media</label>
+          </div>
+          <div className={rangeContainerStyles}>
+            <input type="radio" id="friends" name="heardFrom" value="friends" onChange={(e) => setHeardFrom(e.target.value)}/>
+            <label htmlFor="friends">Friends</label>
+          </div>
+          <div className={rangeContainerStyles}>
+            <input type="radio" id="found myself" name="heardFrom" value="found myself" onChange={(e) => setHeardFrom(e.target.value)}/>
+            <label htmlFor="found myself">Found myself</label>
+          </div>
         </div>
 
-        <div className={inputContainerStyle}>
-          <label htmlFor="email">Email</label>
-          <input className={inputStyle} type="text" id='email' onChange={(e) => setEmail(e.target.value)}/>
+        <div className="col-span-2 flex justify-center">
+          {isLoading ? (
+            <p className="">Loading...</p>
+          ) : (
+            <p className="text-red-500">{invalidInputMessage}</p>
+          )}
         </div>
 
-        <div className={inputContainerStyle}>
-          <label htmlFor="dateOfBirth">Date of birth</label>
-          <input className={inputStyle} type="date" id='dateOfBirth' onChange={(e) => setDateOfBirth(new Date(e.target.value))}/>
+        <div className="col-span-2 flex justify-center">
+          <input type="submit" className="leading-4 p-2 hover:bg-slate-100 rounded-lg"/>
         </div>
-
-        <div className={inputContainerStyle}>
-          <input type="radio" id="social media" name="heardFrom" value="social media" onChange={(e) => setHeardFrom(e.target.value)}/>
-          <label htmlFor="social media">Social media</label>
-          <input type="radio" id="friends" name="heardFrom" value="friends" onChange={(e) => setHeardFrom(e.target.value)}/>
-          <label htmlFor="friends">Friends</label>
-          <input type="radio" id="found myself" name="heardFrom" value="found myself" onChange={(e) => setHeardFrom(e.target.value)}/>
-          <label htmlFor="found myself">Found myself</label>
-        </div>
-
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : (
-          <p className="text-red-500">{invalidInputMessage}</p>
-        )}
-
-        <input type="submit"/>
       </form>
     </div>
   )
